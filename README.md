@@ -37,7 +37,7 @@ NagrikSetu is a modern, premium civic engagement platform connecting citizens of
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/gauswamiashih/nagriksetu.git
+    git clone https://github.com/yourusername/nagriksetu.git
     cd nagriksetu
     ```
 

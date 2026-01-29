@@ -18,6 +18,7 @@ import {
   Zap,
   HeartHandshake,
 } from 'lucide-react';
+import { Reveal } from '@/components/ui/Reveal';
 
 const features = [
   {
@@ -81,19 +82,19 @@ export default function Home() {
         <div className="absolute inset-0 bg-hero-pattern opacity-50" />
         <div className="container mx-auto px-4 py-20 md:py-28 relative z-10">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-primary/20 text-primary-foreground rounded-full px-4 py-1.5 text-sm mb-6">
+            <div className="inline-flex items-center gap-2 bg-primary/20 text-primary-foreground rounded-full px-4 py-1.5 text-sm mb-6 animate-fade-in">
               <Shield className="h-4 w-4" />
               <span>Government of Gujarat Initiative</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-secondary-foreground mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-secondary-foreground mb-6 leading-tight animate-fade-in [animation-delay:200ms] opacity-0 fill-mode-forwards">
               NagrikSetu
               <span className="block text-primary">Banaskantha</span>
             </h1>
-            <p className="text-lg md:text-xl text-secondary-foreground/80 mb-8 max-w-2xl">
-              Your voice matters. Report civic issues directly to the district administration 
+            <p className="text-lg md:text-xl text-secondary-foreground/80 mb-8 max-w-2xl animate-fade-in [animation-delay:400ms] opacity-0 fill-mode-forwards">
+              Your voice matters. Report civic issues directly to the district administration
               and track their resolution in real-time. Together, let's build a better Banaskantha.
             </p>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 animate-fade-in [animation-delay:600ms] opacity-0 fill-mode-forwards">
               {user ? (
                 <>
                   <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg">
@@ -127,7 +128,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        
+
         {/* Wave decoration */}
         <div className="absolute bottom-0 left-0 right-0">
           <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
@@ -140,13 +141,15 @@ export default function Home() {
       <section className="py-12 -mt-6 relative z-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {stats.map((stat) => (
-              <Card key={stat.label} className="text-center glass-card">
-                <CardContent className="pt-6">
-                  <p className="text-3xl md:text-4xl font-bold text-primary">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
-                </CardContent>
-              </Card>
+            {stats.map((stat, index) => (
+              <Reveal key={stat.label} delay={index * 100}>
+                <Card className="text-center glass-card hover:scale-105 transition-transform duration-300">
+                  <CardContent className="pt-6">
+                    <p className="text-3xl md:text-4xl font-bold text-primary">{stat.value}</p>
+                    <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+                  </CardContent>
+                </Card>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -164,16 +167,18 @@ export default function Home() {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature) => (
-              <Card key={feature.title} className="group hover:shadow-lg transition-all duration-300 border-2 border-transparent hover:border-primary/20">
-                <CardContent className="pt-6">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                    <feature.icon className="h-6 w-6 text-primary group-hover:text-primary-foreground" />
-                  </div>
-                  <h3 className="font-display font-semibold text-lg mb-2">{feature.title}</h3>
-                  <p className="text-sm text-muted-foreground">{feature.description}</p>
-                </CardContent>
-              </Card>
+            {features.map((feature, index) => (
+              <Reveal key={feature.title} delay={index * 100}>
+                <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-transparent hover:border-primary/30 bg-card/50 backdrop-blur-sm">
+                  <CardContent className="pt-6">
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300 group-hover:scale-110 transform">
+                      <feature.icon className="h-6 w-6 text-primary group-hover:text-primary-foreground" />
+                    </div>
+                    <h3 className="font-display font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
+                    <p className="text-sm text-muted-foreground">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -191,20 +196,21 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {categories.map((category) => (
-              <Link
-                key={category.name}
-                to={user ? '/report' : '/login'}
-                className="group"
-              >
-                <Card className="text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-2 border-transparent hover:border-primary/20">
-                  <CardContent className="py-6">
-                    <span className="text-4xl mb-3 block">{category.icon}</span>
-                    <h3 className="font-medium text-sm mb-1">{category.name}</h3>
-                    <p className="text-xs text-muted-foreground">{category.count} issues</p>
-                  </CardContent>
-                </Card>
-              </Link>
+            {categories.map((category, index) => (
+              <Reveal key={category.name} delay={index * 50}>
+                <Link
+                  to={user ? '/report' : '/login'}
+                  className="group"
+                >
+                  <Card className="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-transparent hover:border-primary/30 group-hover:bg-primary/5">
+                    <CardContent className="py-6">
+                      <span className="text-4xl mb-3 block group-hover:scale-110 transition-transform duration-300">{category.icon}</span>
+                      <h3 className="font-medium text-sm mb-1 group-hover:text-primary transition-colors">{category.name}</h3>
+                      <p className="text-xs text-muted-foreground">{category.count} issues</p>
+                    </CardContent>
+                  </Card>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -246,7 +252,7 @@ export default function Home() {
               Join the Movement
             </h2>
             <p className="text-lg text-secondary-foreground/80 mb-8">
-              Be a part of the digital transformation in Banaskantha. Your participation 
+              Be a part of the digital transformation in Banaskantha. Your participation
               helps us identify and resolve issues faster, making our district a better place to live.
             </p>
             {!user && (

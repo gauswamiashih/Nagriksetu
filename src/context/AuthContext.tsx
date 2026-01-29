@@ -80,7 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await new Promise(resolve => setTimeout(resolve, 500));
 
       const users = getStoredUsers();
-      
+
       if (users.some(u => u.email === email)) {
         throw new Error('Email already registered');
       }
@@ -116,6 +116,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const resetPassword = async (email: string) => {
+    setIsLoading(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      const users = getStoredUsers();
+      // Check if user exists (for security, usually you don't reveal this, but for this app it's fine/helpful for demo)
+      const exists = users.some(u => u.email === email);
+
+      if (!exists && email !== ADMIN_EMAIL) {
+        // Optionally throw error if you want to tell them email not found
+        // For better security in real apps, we just say "If account exists..."
+        // But per plan, we'll throw error to demo the failure case
+        throw new Error('No account found with this email address');
+      }
+
+      toast.success('Password reset link sent to your email');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to send reset link');
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const logout = () => {
     setUser(null);
     localStorage.removeItem(CURRENT_USER_KEY);
@@ -125,7 +150,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const isAdmin = user?.role === 'admin' || user?.email === ADMIN_EMAIL;
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, register, logout, isAdmin }}>
+    <AuthContext.Provider value={{ user, isLoading, login, register, resetPassword, logout, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

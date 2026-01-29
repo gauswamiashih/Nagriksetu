@@ -18,7 +18,7 @@ export function Footer() {
               </div>
             </div>
             <p className="text-sm text-secondary-foreground/80">
-              Connecting citizens with local governance for a better Banaskantha. 
+              Connecting citizens with local governance for a better Banaskantha.
               Report issues, track progress, and build a stronger community together.
             </p>
             <div className="flex gap-4">
@@ -91,11 +91,11 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-sm text-secondary-foreground/80">
                 <Phone className="h-5 w-5 shrink-0" />
-                <span>+91 2742 252525</span>
+                <span>+91 96645 92743</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-secondary-foreground/80">
                 <Mail className="h-5 w-5 shrink-0" />
-                <span>collector-ban@gujarat.gov.in</span>
+                <span>gauswamiashish760@gmail.com</span>
               </li>
             </ul>
           </div>

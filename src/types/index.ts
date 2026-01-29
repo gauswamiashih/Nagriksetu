@@ -7,13 +7,13 @@ export interface User {
   createdAt: Date;
 }
 
-export type IssueCategory = 
-  | 'road' 
-  | 'water' 
-  | 'electricity' 
-  | 'garbage' 
-  | 'drainage' 
-  | 'streetlight' 
+export type IssueCategory =
+  | 'road'
+  | 'water'
+  | 'electricity'
+  | 'garbage'
+  | 'drainage'
+  | 'streetlight'
   | 'other';
 
 export type IssueSeverity = 'low' | 'medium' | 'high';
@@ -44,6 +44,7 @@ export interface AuthContextType {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string, name: string) => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
   logout: () => void;
   isAdmin: boolean;
 }

@@ -6,11 +6,11 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Clock, 
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
   Send,
   Building2,
   Globe,
@@ -47,15 +47,15 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       contactSchema.parse(formData);
       setErrors({});
       setIsLoading(true);
-      
+
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       toast.success('Message sent successfully! We will get back to you soon.');
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
     } catch (error) {
@@ -123,7 +123,7 @@ export default function Contact() {
                     <div>
                       <h3 className="font-semibold mb-1">Phone</h3>
                       <p className="text-sm text-muted-foreground">
-                        +91 2742 252525<br />
+                        +91 96645 92743<br />
                         +91 2742 252526
                       </p>
                     </div>
@@ -140,7 +140,7 @@ export default function Contact() {
                     <div>
                       <h3 className="font-semibold mb-1">Email</h3>
                       <p className="text-sm text-muted-foreground">
-                        collector-ban@gujarat.gov.in<br />
+                        gauswamiashish760@gmail.com<br />
                         support@nagriksetu.gov.in
                       </p>
                     </div>
@@ -174,9 +174,9 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Official Website</h3>
-                      <a 
-                        href="https://banaskantha.gujarat.gov.in" 
-                        target="_blank" 
+                      <a
+                        href="https://banaskantha.gujarat.gov.in"
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-sm text-primary hover:underline"
                       >
