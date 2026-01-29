@@ -1,73 +1,65 @@
-# Welcome to your Lovable project
+# NagrikSetu - Citizen Connectivity Platform
 
-## Project info
+NagrikSetu is a modern, premium civic engagement platform connecting citizens of Banaskantha with the district administration. It empowers citizens to report issues and enables administrators to track and resolve them efficiently.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+![NagrikSetu Hero](/public/hero-preview.png)
 
-## How can I edit this code?
+## 🚀 Key Features
 
-There are several ways of editing your application.
+### 🏛️ For Citizens
+-   **Easy Reporting**: Report civic issues (Roads, Water, Electricity, etc.) with photos and precise location.
+-   **Real-time Tracking**: Monitor the status of reported complaints (Pending, In Progress, Resolved).
+-   **User Dashboard**: A personal dashboard to view history and updates.
+-   **Mobile Friendly**: Fully responsive design for access on any device.
 
-**Use Lovable**
+### 👮‍♂️ For Administration
+-   **Admin Dashboard**: comprehensive overview of all complaints.
+-   **Issue Management**: Update status, assign severity, and view detailed reports.
+-   **User Management**: View and manage registered citizens and admins.
+-   **Analytics**: Visual statistics on resolved issues, pending complaints, and active users.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### 🎨 Design & Experience
+-   **Premium Aesthetic**: A custom "Burnt Saffron & Midnight Navy" theme reflecting authority and trust.
+-   **"Wow" Typography**: Professional font stack using **Outfit** (Headings) and **Plus Jakarta Sans** (Body).
+-   **Interactive Animations**:
+    -   **Scroll Reveal**: Elements fade and slide in as you scroll.
+    -   **Glassmorphism**: Modern frosted glass cards and overlays.
+    -   **Parallax Hero**: Dynamic entrance animations.
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🛠️ Technology Stack
+-   **Frontend**: React, TypeScript, Vite
+-   **Styling**: Tailwind CSS, Shadcn UI, Lucide Icons
+-   **State Management**: React Context API
+-   **Animations**: Custom Tailwind Animations, Intersection Observer
+-   **Forms**: React Hook Form, Zod Validation
 
-**Use your preferred IDE**
+## 📦 Installation & Setup
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/gauswamiashih/nagriksetu.git
+    cd nagriksetu
+    ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
 
-Follow these steps:
+3.  **Run Development Server**
+    ```bash
+    npm run dev
+    ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+4.  **Build for Production**
+    ```bash
+    npm run build
+    ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🔐 Default Admin Credentials
+*For testing purposes only*
+-   **Email**: `gauswamiashish760@gmail.com`
+-   **Password**: [Any password]
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 📜 License
+This project is open-source and available under the MIT License.
