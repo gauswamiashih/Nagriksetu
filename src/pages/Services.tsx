@@ -75,8 +75,8 @@ export default function Services() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service) => (
-              <Card 
-                key={service.title} 
+              <Card
+                key={service.title}
                 className={`hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-2 ${service.color}`}
               >
                 <CardHeader>

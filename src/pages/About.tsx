@@ -1,10 +1,10 @@
 import { Layout } from '@/components/layout/Layout';
 import { Card, CardContent } from '@/components/ui/card';
-import { 
-  Shield, 
-  Target, 
-  Eye, 
-  Users, 
+import {
+  Shield,
+  Target,
+  Eye,
+  Users,
   CheckCircle2,
   MapPin,
   Building2,
@@ -70,9 +70,9 @@ export default function About() {
                 </div>
                 <h2 className="text-2xl font-display font-bold mb-4">Our Mission</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  To empower every citizen of Banaskantha with a simple, transparent, and efficient 
-                  platform to report and track civic issues. We believe that active citizen 
-                  participation is key to building a better community, and NagrikSetu makes this 
+                  To empower every citizen of Banaskantha with a simple, transparent, and efficient
+                  platform to report and track civic issues. We believe that active citizen
+                  participation is key to building a better community, and NagrikSetu makes this
                   participation accessible to everyone.
                 </p>
               </CardContent>
@@ -85,9 +85,9 @@ export default function About() {
                 </div>
                 <h2 className="text-2xl font-display font-bold mb-4">Our Vision</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  To transform Banaskantha into a model district where every civic issue is 
-                  addressed promptly and transparently. We envision a future where technology 
-                  bridges the gap between citizens and administration, creating a responsive 
+                  To transform Banaskantha into a model district where every civic issue is
+                  addressed promptly and transparently. We envision a future where technology
+                  bridges the gap between citizens and administration, creating a responsive
                   and accountable governance system.
                 </p>
               </CardContent>
@@ -129,11 +129,11 @@ export default function About() {
             <Card>
               <CardContent className="pt-6">
                 <p className="text-muted-foreground leading-relaxed">
-                  Banaskantha is a district in the state of Gujarat, India. It is the fifth largest 
-                  district in Gujarat by area. The district headquarters is located at Palanpur. 
-                  Named after the Banas River, the district is known for its rich cultural heritage, 
-                  agricultural prosperity, and the famous Ambaji Temple. With a growing population 
-                  and expanding infrastructure, efficient civic management is crucial for the 
+                  Banaskantha is a district in the state of Gujarat, India. It is the fifth largest
+                  district in Gujarat by area. The district headquarters is located at Palanpur.
+                  Named after the Banas River, the district is known for its rich cultural heritage,
+                  agricultural prosperity, and the famous Ambaji Temple. With a growing population
+                  and expanding infrastructure, efficient civic management is crucial for the
                   district's continued development.
                 </p>
               </CardContent>

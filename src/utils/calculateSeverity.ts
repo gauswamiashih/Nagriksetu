@@ -23,12 +23,12 @@ export function calculateSeverity(
   description: string
 ): IssueSeverity {
   const combinedText = `${title} ${description}`.toLowerCase();
-  
+
   // Check for high severity keywords first
   const hasHighSeverityKeyword = HIGH_SEVERITY_KEYWORDS.some(
     keyword => combinedText.includes(keyword)
   );
-  
+
   // Check for medium severity keywords
   const hasMediumSeverityKeyword = MEDIUM_SEVERITY_KEYWORDS.some(
     keyword => combinedText.includes(keyword)
@@ -110,11 +110,23 @@ export function getSeverityConfig(severity: IssueSeverity) {
         className: 'severity-medium',
         color: 'hsl(45 93% 47%)',
       };
+    case 'critical':
+      return {
+        label: 'Critical',
+        className: 'severity-critical',
+        color: 'hsl(0 100% 50%)',
+      };
     case 'low':
       return {
         label: 'Low Priority',
         className: 'severity-low',
         color: 'hsl(145 63% 42%)',
+      };
+    default:
+      return {
+        label: severity || 'Unknown',
+        className: 'severity-low',
+        color: 'gray',
       };
   }
 }

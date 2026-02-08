@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
@@ -9,20 +9,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useAuth } from '@/context/AuthContext';
 import { useIssues } from '@/context/IssueContext';
+import { issueService } from '@/services/api'; // Direct service for categories
 import { MapPicker } from '@/components/MapPicker';
-import { IssueCategory } from '@/types';
 import { FileText, Upload, MapPin, Loader2, AlertCircle, Image as ImageIcon } from 'lucide-react';
 import { z } from 'zod';
-
-const categories: { value: IssueCategory; label: string; icon: string }[] = [
-  { value: 'road', label: 'Road & Potholes', icon: '🛣️' },
-  { value: 'water', label: 'Water Supply', icon: '💧' },
-  { value: 'electricity', label: 'Electricity', icon: '⚡' },
-  { value: 'garbage', label: 'Garbage & Sanitation', icon: '🗑️' },
-  { value: 'streetlight', label: 'Street Lights', icon: '💡' },
-  { value: 'drainage', label: 'Drainage', icon: '🚰' },
-  { value: 'other', label: 'Other', icon: '📋' },
-];
 
 const issueSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters').max(100, 'Title is too long'),
@@ -35,37 +25,49 @@ export default function ReportIssue() {
   const { createIssue, isLoading } = useIssues();
   const navigate = useNavigate();
 
+  const [categories, setCategories] = useState<{ id: string; name: string; icon: string }[]>([]);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+
+  // Fetch categories
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const data = await issueService.getCategories();
+        const mapped = data.map(cat => {
+          let icon = '📋';
+          const lower = cat.name.toLowerCase();
+          if (lower.includes('road')) icon = '🛣️';
+          else if (lower.includes('water')) icon = '💧';
+          else if (lower.includes('elect')) icon = '⚡';
+          else if (lower.includes('sanitation') || lower.includes('garbage')) icon = '🗑️';
+          else if (lower.includes('light')) icon = '💡';
+          else if (lower.includes('drain')) icon = '🚰';
+          else if (lower.includes('safe')) icon = '👮';
+          return { ...cat, icon };
+        });
+        setCategories(mapped);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoadingCategories(false);
+      }
+    };
+    fetch();
+  }, []);
+
+  const [locationMode, setLocationMode] = useState<'auto' | 'manual'>('auto');
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    category: '' as IssueCategory,
+    category: '', // Stores ID
   });
   const [location, setLocation] = useState<{ lat: number; lng: number; address: string } | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
 
-  if (isAdmin) {
-    return <Navigate to="/admin" replace />;
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
-  };
-
-  const handleCategoryChange = (value: string) => {
-    setFormData(prev => ({ ...prev, category: value as IssueCategory }));
-    if (errors.category) {
-      setErrors(prev => ({ ...prev, category: '' }));
-    }
-  };
+  // ... (keep existing effects)
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -74,11 +76,15 @@ export default function ReportIssue() {
         setErrors(prev => ({ ...prev, image: 'Image must be less than 5MB' }));
         return;
       }
+      setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
       };
       reader.readAsDataURL(file);
+      if (errors.image) {
+        setErrors(prev => ({ ...prev, image: '' }));
+      }
     }
   };
 
@@ -92,7 +98,6 @@ export default function ReportIssue() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate form
     try {
       issueSchema.parse(formData);
     } catch (error) {
@@ -109,7 +114,12 @@ export default function ReportIssue() {
     }
 
     if (!location) {
-      setErrors(prev => ({ ...prev, location: 'Please select a location on the map' }));
+      setErrors(prev => ({ ...prev, location: 'Please select a location' }));
+      return;
+    }
+
+    if (!imageFile) {
+      setErrors(prev => ({ ...prev, image: 'Photo evidence is required' }));
       return;
     }
 
@@ -117,8 +127,8 @@ export default function ReportIssue() {
       await createIssue({
         title: formData.title,
         description: formData.description,
-        category: formData.category,
-        imageUrl: imagePreview || undefined,
+        category: formData.category as any,
+        imageFile: imageFile,
         latitude: location.lat,
         longitude: location.lng,
         address: location.address,
@@ -126,7 +136,7 @@ export default function ReportIssue() {
         userId: user.id,
         userName: user.name,
       });
-      
+
       navigate('/dashboard');
     } catch (error) {
       // Error handled in context
@@ -181,15 +191,15 @@ export default function ReportIssue() {
                   <div className="space-y-2">
                     <Label>Category *</Label>
                     <Select value={formData.category} onValueChange={handleCategoryChange}>
-                      <SelectTrigger className="w-full bg-background">
-                        <SelectValue placeholder="Select issue category" />
+                      <SelectTrigger className="w-full bg-background" disabled={loadingCategories}>
+                        <SelectValue placeholder={loadingCategories ? "Loading..." : "Select issue category"} />
                       </SelectTrigger>
                       <SelectContent className="bg-popover">
                         {categories.map((cat) => (
-                          <SelectItem key={cat.value} value={cat.value}>
+                          <SelectItem key={cat.id} value={cat.id}>
                             <span className="flex items-center gap-2">
                               <span>{cat.icon}</span>
-                              <span>{cat.label}</span>
+                              <span>{cat.name}</span>
                             </span>
                           </SelectItem>
                         ))}
@@ -228,7 +238,7 @@ export default function ReportIssue() {
 
                   {/* Image Upload */}
                   <div className="space-y-2">
-                    <Label>Upload Photo (Optional)</Label>
+                    <Label>Upload Photo * (Required for verification)</Label>
                     <div className="border-2 border-dashed border-input rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
                       {imagePreview ? (
                         <div className="space-y-4">
@@ -241,7 +251,10 @@ export default function ReportIssue() {
                             type="button"
                             variant="outline"
                             size="sm"
-                            onClick={() => setImagePreview(null)}
+                            onClick={() => {
+                              setImagePreview(null);
+                              setImageFile(null);
+                            }}
                           >
                             Remove Image
                           </Button>
@@ -276,12 +289,61 @@ export default function ReportIssue() {
                   </div>
 
                   {/* Location */}
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-primary" />
-                      Location *
-                    </Label>
-                    <MapPicker onLocationSelect={handleLocationSelect} />
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label className="flex items-center gap-2">
+                        <MapPin className="h-4 w-4 text-primary" />
+                        Location *
+                      </Label>
+
+                      <div className="flex bg-muted p-1 rounded-lg w-fit">
+                        <button
+                          type="button"
+                          className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all ${locationMode === 'auto'
+                            ? 'bg-background shadow text-foreground'
+                            : 'text-muted-foreground hover:text-foreground'
+                            }`}
+                          onClick={() => setLocationMode('auto')}
+                        >
+                          Auto-detect
+                        </button>
+                        <button
+                          type="button"
+                          className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all ${locationMode === 'manual'
+                            ? 'bg-background shadow text-foreground'
+                            : 'text-muted-foreground hover:text-foreground'
+                            }`}
+                          onClick={() => setLocationMode('manual')}
+                        >
+                          Manual Pin
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className={locationMode === 'auto' ? 'block' : 'hidden'}>
+                      <div className="bg-muted/50 p-4 rounded-lg flex flex-col items-center justify-center text-center gap-2">
+                        <p className="text-sm text-muted-foreground">
+                          We will automatically detect your current location.
+                        </p>
+                        <MapPicker
+                          onLocationSelect={handleLocationSelect}
+                          initialLat={location?.lat}
+                          initialLng={location?.lng}
+                        />
+                      </div>
+                    </div>
+
+                    <div className={locationMode === 'manual' ? 'block' : 'hidden'}>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Click on the map to place the pin exactly where the issue is.
+                      </p>
+                      <MapPicker
+                        onLocationSelect={handleLocationSelect}
+                        initialLat={location?.lat}
+                        initialLng={location?.lng}
+                      />
+                    </div>
+
                     {errors.location && (
                       <p className="text-sm text-destructive flex items-center gap-1">
                         <AlertCircle className="h-3 w-3" />

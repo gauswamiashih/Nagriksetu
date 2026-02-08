@@ -44,23 +44,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     try {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-      const users = getStoredUsers();
-      const foundUser = users.find(u => u.email === email && u.password === password);
+      const data = await response.json();
 
-      if (!foundUser) {
-        throw new Error('Invalid email or password');
+      if (!response.ok) {
+        throw new Error(data.error || 'Login failed');
       }
 
       const loggedInUser: User = {
-        id: foundUser.id,
-        email: foundUser.email,
-        name: foundUser.name,
-        phone: foundUser.phone,
-        role: foundUser.role,
-        createdAt: new Date(foundUser.createdAt)
+        id: data.id,
+        email: data.email,
+        name: data.name,
+        role: data.role as 'citizen' | 'admin', // Ensure role matches type
+        createdAt: new Date(data.createdAt)
       };
 
       setUser(loggedInUser);
@@ -77,36 +78,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = async (email: string, password: string, name: string) => {
     setIsLoading(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 500));
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, name }),
+      });
 
-      const users = getStoredUsers();
+      const data = await response.json();
 
-      if (users.some(u => u.email === email)) {
-        throw new Error('Email already registered');
+      if (!response.ok) {
+        throw new Error(data.error || 'Registration failed');
       }
 
-      const newUser: StoredUser = {
-        id: `user_${Date.now()}`,
-        email,
-        password,
-        name,
-        role: email === ADMIN_EMAIL ? 'admin' : 'citizen',
-        createdAt: new Date().toISOString()
+      const newUser: User = {
+        id: data.id,
+        email: data.email,
+        name: data.name,
+        role: data.role as 'citizen' | 'admin',
+        createdAt: new Date(data.createdAt)
       };
 
-      users.push(newUser);
-      saveUsers(users);
-
-      const loggedInUser: User = {
-        id: newUser.id,
-        email: newUser.email,
-        name: newUser.name,
-        role: newUser.role,
-        createdAt: new Date(newUser.createdAt)
-      };
-
-      setUser(loggedInUser);
-      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(loggedInUser));
+      setUser(newUser);
+      localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(newUser));
       toast.success('Account created successfully!');
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Registration failed');
@@ -147,7 +140,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     toast.success('Logged out successfully');
   };
 
-  const isAdmin = user?.role === 'admin' || user?.email === ADMIN_EMAIL;
+  // Strict Admin Email Restriction
+  const isAdmin = user?.email === ADMIN_EMAIL;
 
   return (
     <AuthContext.Provider value={{ user, isLoading, login, register, resetPassword, logout, isAdmin }}>

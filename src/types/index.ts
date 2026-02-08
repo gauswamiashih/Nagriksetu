@@ -7,8 +7,15 @@ export interface User {
   createdAt: Date;
 }
 
+export interface Category {
+  id: string;
+  name: string;
+  description: string;
+}
+
 export type IssueCategory =
   | 'road'
+
   | 'water'
   | 'electricity'
   | 'garbage'
@@ -16,7 +23,7 @@ export type IssueCategory =
   | 'streetlight'
   | 'other';
 
-export type IssueSeverity = 'low' | 'medium' | 'high';
+export type IssueSeverity = 'low' | 'medium' | 'high' | 'critical';
 
 export type IssueStatus = 'pending' | 'in-progress' | 'resolved';
 
@@ -37,6 +44,23 @@ export interface Issue {
   createdAt: Date;
   updatedAt: Date;
   resolvedAt?: Date;
+  complaintNumber?: string;
+  assigneeName?: string;
+  assigneeMobile?: string;
+  expectedCompletionDays?: number;
+  otherFacilities?: string;
+  assignDate?: Date;
+  deadlineDate?: Date;
+  assignedTo?: string; // Kept for backward compatibility or internal user ID ref
+  estimatedResolutionDate?: Date;
+  images?: string[];
+  imageFile?: File;
+  statusHistory?: {
+    status: IssueStatus;
+    updatedAt: Date;
+    updatedBy?: string;
+    comment?: string;
+  }[];
 }
 
 export interface AuthContextType {
@@ -55,5 +79,6 @@ export interface IssueContextType {
   isLoading: boolean;
   createIssue: (issue: Omit<Issue, 'id' | 'createdAt' | 'updatedAt' | 'severity' | 'status'>) => Promise<void>;
   updateIssueStatus: (issueId: string, status: IssueStatus) => Promise<void>;
+  assignIssue: (issueId: string, data: any) => Promise<void>;
   getIssueById: (id: string) => Issue | undefined;
 }
