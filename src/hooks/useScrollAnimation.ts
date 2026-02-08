@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useRef, useState } from 'react';
 
 export function useScrollAnimation(threshold = 0.1) {
@@ -35,3 +36,42 @@ export function useScrollAnimation(threshold = 0.1) {
 
    return { ref, isVisible };
 }
+=======
+import { useEffect, useRef, useState } from 'react';
+
+export function useScrollAnimation(threshold = 0.1) {
+   const ref = useRef<HTMLElement>(null);
+   const [isVisible, setIsVisible] = useState(false);
+
+   useEffect(() => {
+      const observer = new IntersectionObserver(
+         ([entry]) => {
+            if (entry.isIntersecting) {
+               setIsVisible(true);
+               // Once visible, we can stop observing if we only want the animation to play once
+               if (ref.current) {
+                  observer.unobserve(ref.current);
+               }
+            }
+         },
+         {
+            threshold,
+            rootMargin: '0px 0px -50px 0px', // Trigger slightly before the element is fully in view
+         }
+      );
+
+      const currentRef = ref.current;
+      if (currentRef) {
+         observer.observe(currentRef);
+      }
+
+      return () => {
+         if (currentRef) {
+            observer.unobserve(currentRef);
+         }
+      };
+   }, [threshold]);
+
+   return { ref, isVisible };
+}
+>>>>>>> 0251dfea8c914f952057908c07daaf9cec5b8ee2

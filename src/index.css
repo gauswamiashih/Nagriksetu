@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -190,4 +191,200 @@
   .severity-low {
     @apply bg-[hsl(var(--severity-low))] text-white;
   }
+=======
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+/* NagrikSetu Design System - Indian Civic Platform */
+
+@layer base {
+  :root {
+    /* Core backgrounds - Premium Slate Tones */
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
+
+    /* Card surfaces */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Primary - Burnt Saffron (Rich & Authoritative) */
+    --primary: 30 85% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary - Midnight Navy (Deep & Professional) */
+    --secondary: 222 70% 15%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted surfaces */
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    /* Accent - Emerald (Growth & Prosperity) */
+    --accent: 148 70% 35%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Destructive - Red */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders & inputs */
+    --border: 220 13% 87%;
+    --input: 220 13% 91%;
+    --ring: 30 85% 55%;
+
+    /* Radius */
+    --radius: 0.75rem;
+
+    /* Sidebar */
+    --sidebar-background: 222 70% 12%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 30 85% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 60% 20%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 60% 20%;
+    --sidebar-ring: 30 85% 55%;
+
+    /* Custom NagrikSetu colors - Updated to Premium */
+    --saffron: 30 85% 55%;
+    --saffron-light: 30 80% 65%;
+    --saffron-dark: 30 90% 45%;
+
+    --navy: 222 70% 15%;
+    --navy-light: 222 60% 25%;
+    --navy-dark: 222 80% 10%;
+
+    --indian-green: 148 70% 35%;
+    --indian-green-light: 148 60% 45%;
+
+    /* Status colors */
+    --status-pending: 40 95% 50%;
+    --status-in-progress: 210 100% 50%;
+    --status-resolved: 148 70% 35%;
+
+    /* Severity colors */
+    --severity-high: 0 84% 60%;
+    --severity-medium: 40 95% 50%;
+    --severity-low: 148 70% 40%;
+
+    /* Gradients - Refined & Smoother */
+    --gradient-hero: linear-gradient(135deg, hsl(222 70% 15%) 0%, hsl(222 80% 10%) 100%);
+    --gradient-saffron: linear-gradient(135deg, hsl(30 85% 55%) 0%, hsl(30 95% 45%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 20% 98%) 100%);
+  }
+
+  .dark {
+    --background: 222 47% 7%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 30 85% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 222 50% 35%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 148 60% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 30 85% 55%;
+
+    --sidebar-background: 222 47% 7%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 30 85% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 30 85% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased leading-relaxed;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  /* Enhanced Typography */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Outfit', system-ui, sans-serif;
+    @apply font-bold tracking-tight text-foreground/90;
+  }
+
+  h1 {
+    @apply tracking-tighter;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-[#e67e22] to-accent;
+  }
+
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .saffron-gradient {
+    background: var(--gradient-saffron);
+  }
+
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-xl border border-border/50 shadow-xl;
+  }
+
+  .status-pending {
+    @apply bg-[hsl(var(--status-pending))] text-white;
+  }
+
+  .status-in-progress {
+    @apply bg-[hsl(var(--status-in-progress))] text-white;
+  }
+
+  .status-resolved {
+    @apply bg-[hsl(var(--status-resolved))] text-white;
+  }
+
+  .severity-high {
+    @apply bg-[hsl(var(--severity-high))] text-white;
+  }
+
+  .severity-medium {
+    @apply bg-[hsl(var(--severity-medium))] text-white;
+  }
+
+  .severity-low {
+    @apply bg-[hsl(var(--severity-low))] text-white;
+  }
+>>>>>>> 0251dfea8c914f952057908c07daaf9cec5b8ee2
 }
