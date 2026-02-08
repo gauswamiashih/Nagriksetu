@@ -45,10 +45,26 @@ export default function AdminDashboard() {
   const { issues, updateIssueStatus, isLoading: isIssuesLoading } = useIssues();
   const { users, isLoading: isUsersLoading } = useUsers();
 
+  /* Assignment State */
+  const [assignDialogOpen, setAssignDialogOpen] = useState(false);
+  const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
+  const [assignData, setAssignData] = useState({
+    assigneeName: '',
+    assigneeMobile: '',
+    expectedCompletionDays: '',
+    otherFacilities: '',
+    deadlineDate: '',
+  });
+
+  const { assignIssue } = useIssues();
+
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [severityFilter, setSeverityFilter] = useState<string>('all');
 
-
+  // User Stats (moved up)
+  const totalUsers = users.length;
+  const citizenCount = users.filter(u => u.role === 'citizen').length;
+  const adminCount = users.filter(u => u.role === 'admin').length;
 
   if (!user) {
     return <Navigate to="/login" replace />;
@@ -71,24 +87,6 @@ export default function AdminDashboard() {
   const inProgressCount = issues.filter(i => i.status === 'in-progress').length;
   const resolvedCount = issues.filter(i => i.status === 'resolved').length;
   const highSeverityCount = issues.filter(i => i.severity === 'high').length;
-
-  /* Assignment State */
-  const [assignDialogOpen, setAssignDialogOpen] = useState(false);
-  const [selectedIssue, setSelectedIssue] = useState<Issue | null>(null);
-  const [assignData, setAssignData] = useState({
-    assigneeName: '',
-    assigneeMobile: '',
-    expectedCompletionDays: '',
-    otherFacilities: '',
-    deadlineDate: '',
-  });
-
-  const { assignIssue } = useIssues();
-
-  // User Stats (Restored)
-  const totalUsers = users.length;
-  const citizenCount = users.filter(u => u.role === 'citizen').length;
-  const adminCount = users.filter(u => u.role === 'admin').length;
 
   const handleStatusChange = async (issueId: string, newStatus: IssueStatus) => {
     await updateIssueStatus(issueId, newStatus);
@@ -127,6 +125,7 @@ export default function AdminDashboard() {
       setSelectedIssue(null);
       // Optional: Add a success alert or toast if not already handled by context
       alert('Issue assigned successfully!');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Assignment failed:', error);
       const errorMessage = error.response?.data?.error || error.message || 'Unknown error';

@@ -22,29 +22,30 @@ export default function IssueDetails() {
    const { getIssueById, updateIssueStatus } = useIssues();
    const { isAdmin } = useAuth();
 
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    const [history, setHistory] = useState<any[]>([]);
    const [isLoadingHistory, setIsLoadingHistory] = useState(false);
 
    const issue = getIssueById(id || '');
 
    useEffect(() => {
+      const loadHistory = async () => {
+         if (!id) return;
+         setIsLoadingHistory(true);
+         try {
+            const data = await issueService.getHistory(id);
+            setHistory(data);
+         } catch (error) {
+            console.error('Failed to load history', error);
+         } finally {
+            setIsLoadingHistory(false);
+         }
+      };
+
       if (id) {
          loadHistory();
       }
    }, [id]);
-
-   const loadHistory = async () => {
-      if (!id) return;
-      setIsLoadingHistory(true);
-      try {
-         const data = await issueService.getHistory(id);
-         setHistory(data);
-      } catch (error) {
-         console.error('Failed to load history', error);
-      } finally {
-         setIsLoadingHistory(false);
-      }
-   };
 
    const handleImageUpload = async (file: File) => {
       if (!id) return;

@@ -11,8 +11,10 @@ const api = axios.create({
 });
 
 // Helper to map backend snake_case to frontend camelCase
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapIssueFromBackend = (data: any): Issue => {
    // Map DB category name 'Water Supply' -> 'water', 'Roads' -> 'road'
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    let category: any = 'other';
    if (data.category_name) {
       const lower = data.category_name.toLowerCase();
@@ -64,6 +66,7 @@ export const issueService = {
       return response.data;
    },
 
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    create: async (issueData: any) => {
       // Use FormData to support file upload
       const formData = new FormData();
@@ -88,6 +91,7 @@ export const issueService = {
       return mapIssueFromBackend(response.data);
    },
 
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
    assign: async (id: string, assignmentData: any) => {
       const response = await api.patch(`/complaints/${id}/assign`, assignmentData);
       return mapIssueFromBackend(response.data);

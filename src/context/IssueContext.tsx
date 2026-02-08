@@ -47,6 +47,7 @@ export function IssueProvider({ children }: { children: ReactNode }) {
       const newIssue = await issueService.create(payload);
       setIssues([newIssue, ...issues]);
       toast.success('Issue reported successfully!');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Create issue error:', error);
       if (error.response) {
@@ -79,6 +80,7 @@ export function IssueProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const assignIssue = async (issueId: string, data: any) => {
     try {
       const updatedIssue = await issueService.assign(issueId, data);

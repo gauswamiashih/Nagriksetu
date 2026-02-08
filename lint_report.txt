@@ -1,0 +1,67 @@
+
+D:\nagriksetu\nagriksetu\src\components\ui\badge.tsx
+  29:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\nagriksetu\nagriksetu\src\components\ui\button.tsx
+  47:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\nagriksetu\nagriksetu\src\components\ui\command.tsx
+  24:11  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+D:\nagriksetu\nagriksetu\src\components\ui\form.tsx
+  129:10  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\nagriksetu\nagriksetu\src\components\ui\navigation-menu.tsx
+  111:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\nagriksetu\nagriksetu\src\components\ui\sidebar.tsx
+  636:3  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\nagriksetu\nagriksetu\src\components\ui\sonner.tsx
+  27:19  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\nagriksetu\nagriksetu\src\components\ui\textarea.tsx
+  5:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+D:\nagriksetu\nagriksetu\src\components\ui\toggle.tsx
+  37:18  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\nagriksetu\nagriksetu\src\context\AuthContext.tsx
+  153:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\nagriksetu\nagriksetu\src\context\IssueContext.tsx
+   50:21  error    Unexpected any. Specify a different type                                                                                        @typescript-eslint/no-explicit-any
+   82:53  error    Unexpected any. Specify a different type                                                                                        @typescript-eslint/no-explicit-any
+  115:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+D:\nagriksetu\nagriksetu\src\hooks\useUsers.ts
+  18:59  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\nagriksetu\nagriksetu\src\pages\AdminDashboard.tsx
+   76:51  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+   77:45  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+   78:39  error  React Hook "useState" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?   react-hooks/rules-of-hooks
+   86:27  error  React Hook "useIssues" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?  react-hooks/rules-of-hooks
+  130:21  error  Unexpected any. Specify a different type                                                                                                                                                     @typescript-eslint/no-explicit-any
+
+D:\nagriksetu\nagriksetu\src\pages\Home.tsx
+  313:0  error  Parsing error: Merge conflict marker encountered
+
+D:\nagriksetu\nagriksetu\src\pages\IssueDetails.tsx
+  25:43  error    Unexpected any. Specify a different type                                                                        @typescript-eslint/no-explicit-any
+  34:7   warning  React Hook useEffect has a missing dependency: 'loadHistory'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+D:\nagriksetu\nagriksetu\src\pages\ReportIssue.tsx
+  130:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\nagriksetu\nagriksetu\src\services\api.ts
+  14:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  16:18  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  67:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  91:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+D:\nagriksetu\nagriksetu\src\types\index.ts
+  81:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 28 problems (18 errors, 10 warnings)
+

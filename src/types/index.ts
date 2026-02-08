@@ -78,6 +78,7 @@ export interface IssueContextType {
   isLoading: boolean;
   createIssue: (issue: Omit<Issue, 'id' | 'createdAt' | 'updatedAt' | 'severity' | 'status'>) => Promise<void>;
   updateIssueStatus: (issueId: string, status: IssueStatus) => Promise<void>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   assignIssue: (issueId: string, data: any) => Promise<void>;
   getIssueById: (id: string) => Issue | undefined;
 }

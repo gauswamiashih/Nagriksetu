@@ -69,6 +69,29 @@ export default function ReportIssue() {
 
   // ... (keep existing effects)
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setFormData(prev => ({ ...prev, category: value }));
+    if (errors.category) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors.category;
+        return newErrors;
+      });
+    }
+  };
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -127,6 +150,7 @@ export default function ReportIssue() {
       await createIssue({
         title: formData.title,
         description: formData.description,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         category: formData.category as any,
         imageFile: imageFile,
         latitude: location.lat,

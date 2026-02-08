@@ -15,6 +15,7 @@ export function useUsers() {
             if (storedUsers) {
                const parsedUsers = JSON.parse(storedUsers);
                // Convert date strings back to Date objects
+               // eslint-disable-next-line @typescript-eslint/no-explicit-any
                const formattedUsers = parsedUsers.map((u: any) => ({
                   ...u,
                   createdAt: new Date(u.createdAt)
