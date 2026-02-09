@@ -13,6 +13,7 @@ import { issueService } from '@/services/api'; // Direct service for categories
 import { MapPicker } from '@/components/MapPicker';
 import { FileText, Upload, MapPin, Loader2, AlertCircle, Image as ImageIcon } from 'lucide-react';
 import { z } from 'zod';
+import { toast } from 'sonner';
 
 const issueSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters').max(100, 'Title is too long'),
@@ -146,24 +147,37 @@ export default function ReportIssue() {
       return;
     }
 
+    if (!user) {
+      toast.error('You must be logged in to report an issue');
+      return;
+    }
+
     try {
-      await createIssue({
+      // 1. Upload Image
+      const imageUrl = await issueService.uploadImage(imageFile);
+
+      // 2. Create Issue
+      const newIssue = await createIssue({
         title: formData.title,
         description: formData.description,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        category: formData.category as any,
-        imageFile: imageFile,
+        category_id: formData.category, // Changed from 'category' to 'category_id' to match API expectation
         latitude: location.lat,
         longitude: location.lng,
         address: location.address,
-        district: 'Banaskantha',
         userId: user.id,
-        userName: user.name,
       });
 
+      // 3. Link Image to Issue
+      if (newIssue && newIssue.id) {
+        await issueService.addImageRecord(newIssue.id, imageUrl);
+      }
+
+      toast.success('Issue reported successfully!');
       navigate('/dashboard');
     } catch (error) {
-      // Error handled in context
+      console.error('Error submitting issue:', error);
+      toast.error('Failed to report issue. Please try again.');
     }
   };
 

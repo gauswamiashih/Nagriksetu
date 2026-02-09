@@ -1,29 +1,22 @@
-import axios from 'axios';
 import { Issue, IssueStatus, IssueSeverity } from '@/types';
-
-const API_URL = 'http://localhost:5000/api';
-
-const api = axios.create({
-   baseURL: API_URL,
-   headers: {
-      'Content-Type': 'application/json',
-   },
-});
+import { supabase } from '@/lib/supabase';
 
 // Helper to map backend snake_case to frontend camelCase
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const mapIssueFromBackend = (data: any): Issue => {
-   // Map DB category name 'Water Supply' -> 'water', 'Roads' -> 'road'
-   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-   let category: any = 'other';
-   if (data.category_name) {
-      const lower = data.category_name.toLowerCase();
-      if (lower.includes('road')) category = 'road';
-      else if (lower.includes('water')) category = 'water';
-      else if (lower.includes('sanitation')) category = 'garbage'; // mapping sanitation to garbage for now
-      else if (lower.includes('elect')) category = 'electricity';
-      else if (lower.includes('light')) category = 'streetlight';
+   let categoryName = 'other';
+   if (data.categories && data.categories.name) {
+      categoryName = data.categories.name.toLowerCase();
    }
+
+   let category: any = 'other';
+   if (categoryName.includes('road')) category = 'road';
+   else if (categoryName.includes('water')) category = 'water';
+   else if (categoryName.includes('sanitation') || categoryName.includes('garbage')) category = 'garbage';
+   else if (categoryName.includes('elect')) category = 'electricity';
+   else if (categoryName.includes('light')) category = 'streetlight';
+   else if (categoryName.includes('drain')) category = 'water';
+   else if (categoryName.includes('safe')) category = 'police';
 
    return {
       id: data.id,
@@ -35,7 +28,7 @@ const mapIssueFromBackend = (data: any): Issue => {
       address: data.address,
       district: 'Banaskantha',
       userId: data.user_id,
-      userName: data.user_name || 'Citizen',
+      userName: data.users?.full_name || 'Citizen',
       status: (data.status || 'pending').toLowerCase() as IssueStatus,
       severity: (data.severity || 'low').toLowerCase() as IssueSeverity,
       createdAt: new Date(data.created_at),
@@ -50,64 +43,136 @@ const mapIssueFromBackend = (data: any): Issue => {
       assignDate: data.assign_date ? new Date(data.assign_date) : undefined,
       deadlineDate: data.deadline_date ? new Date(data.deadline_date) : undefined,
       estimatedResolutionDate: data.estimated_resolution_date ? new Date(data.estimated_resolution_date) : undefined,
-      images: [],
+      images: data.complaint_images?.map((img: any) => img.image_url) || [], // Map joined images
       statusHistory: [],
    };
 };
 
 export const issueService = {
    getAll: async (): Promise<Issue[]> => {
-      const response = await api.get('/complaints');
-      return response.data.map(mapIssueFromBackend);
+      const { data, error } = await supabase
+         .from('complaints')
+         .select(`
+        *,
+        categories ( name ),
+        users ( full_name ),
+        complaint_images ( image_url )
+      `)
+         .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data.map(mapIssueFromBackend);
    },
 
    getCategories: async (): Promise<{ id: string; name: string; description: string }[]> => {
-      const response = await api.get('/categories');
-      return response.data;
+      const { data, error } = await supabase
+         .from('categories')
+         .select('*');
+      if (error) throw error;
+      return data;
    },
 
    // eslint-disable-next-line @typescript-eslint/no-explicit-any
    create: async (issueData: any) => {
-      // Use FormData to support file upload
-      const formData = new FormData();
-      formData.append('title', issueData.title);
-      formData.append('description', issueData.description);
-      formData.append('category_id', issueData.category);
-      formData.append('latitude', String(issueData.latitude));
-      formData.append('longitude', String(issueData.longitude));
-      formData.append('address', issueData.address);
-      formData.append('user_id', issueData.userId);
+      // 1. Generate Complaint Number locally or trigger? 
+      // Ideally user DB trigger, but for now let's hope DB trigger exists or we generate simple one
+      // We will let the DB trigger handle complaint_number if it exists, otherwise it might be null initially
+      // Or we rely on the backend logic we had. Since we are moving logic to frontend, we might miss the trigger if it was in Express.
+      // However, the DB schema conversation showed a trigger "set_complaint_number", so we are good.
 
-      if (issueData.imageFile) {
-         formData.append('image', issueData.imageFile);
-      }
+      const { data, error } = await supabase
+         .from('complaints')
+         .insert([
+            {
+               title: issueData.title,
+               description: issueData.description,
+               category_id: issueData.category_id,
+               latitude: issueData.latitude,
+               longitude: issueData.longitude,
+               address: issueData.address,
+               user_id: issueData.user_id,
+               status: 'pending'
+            }
+         ])
+         .select(`*, categories(name), users(full_name)`)
+         .single();
 
-      const response = await api.post('/complaints', formData);
-      return mapIssueFromBackend(response.data);
+      if (error) throw error;
+
+      // Images are handled separately now (upload first, then insert)
+      return mapIssueFromBackend(data);
    },
 
    updateStatus: async (id: string, status: IssueStatus) => {
-      const response = await api.patch(`/complaints/${id}/status`, { status });
-      return mapIssueFromBackend(response.data);
+      const { data, error } = await supabase
+         .from('complaints')
+         .update({ status: status })
+         .eq('id', id)
+         .select(`*, categories(name), users(full_name)`)
+         .single();
+
+      if (error) throw error;
+      return mapIssueFromBackend(data);
    },
 
    // eslint-disable-next-line @typescript-eslint/no-explicit-any
    assign: async (id: string, assignmentData: any) => {
-      const response = await api.patch(`/complaints/${id}/assign`, assignmentData);
-      return mapIssueFromBackend(response.data);
+      const { data, error } = await supabase
+         .from('complaints')
+         .update({
+            assignee_name: assignmentData.assignee_name,
+            assignee_mobile: assignmentData.assignee_mobile,
+            expected_completion_days: assignmentData.expected_completion_days,
+            other_facilities: assignmentData.other_facilities,
+            deadline_date: assignmentData.deadline_date,
+            assign_date: new Date(),
+            status: 'in-progress',
+            assigned_admin_id: assignmentData.assigned_admin_id // if available
+         })
+         .eq('id', id)
+         .select(`*, categories(name), users(full_name)`)
+         .single();
+
+      if (error) throw error;
+      return mapIssueFromBackend(data);
    },
 
-   uploadImage: async (id: string, file: File) => {
-      const formData = new FormData();
-      formData.append('image', file);
-      const response = await api.post(`/complaints/${id}/images`, formData, {
-         headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      return response.data;
+   uploadImage: async (file: File) => {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+         .from('complaints')
+         .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from('complaints').getPublicUrl(filePath);
+      return data.publicUrl;
+   },
+
+   // Add image record to DB (after upload)
+   addImageRecord: async (complaintId: string, imageUrl: string) => {
+      const { data, error } = await supabase
+         .from('complaint_images')
+         .insert([
+            { complaint_id: complaintId, image_url: imageUrl }
+         ])
+         .select();
+
+      if (error) throw error;
+      return data;
    },
 
    getHistory: async (id: string) => {
-      const response = await api.get(`/complaints/${id}/history`);
-      return response.data;
+      const { data, error } = await supabase
+         .from('status_history')
+         .select('*')
+         .eq('complaint_id', id)
+         .order('updated_at', { ascending: false });
+
+      if (error) throw error;
+      return data;
    }
 };

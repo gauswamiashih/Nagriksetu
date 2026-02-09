@@ -33,20 +33,22 @@ export function IssueProvider({ children }: { children: ReactNode }) {
     : [];
 
   const createIssue = async (
-    issueData: Omit<Issue, 'id' | 'createdAt' | 'updatedAt' | 'severity' | 'status'>
-  ) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    issueData: any
+  ): Promise<Issue> => {
     setIsLoading(true);
     try {
       // API call to create issue
       // We pass userId from auth context if available, otherwise it comes from issueData
       const payload = {
         ...issueData,
-        userId: user?.id || issueData.userId,
+        user_id: user?.id || issueData.userId,
       };
 
       const newIssue = await issueService.create(payload);
       setIssues([newIssue, ...issues]);
       toast.success('Issue reported successfully!');
+      return newIssue;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Create issue error:', error);
@@ -54,7 +56,7 @@ export function IssueProvider({ children }: { children: ReactNode }) {
         console.error('Server Error Response:', error.response.data);
         if (error.response.data.error?.includes('foreign key constraint')) {
           toast.error('Session expired. Please log out and log in again.');
-          return;
+          throw error;
         }
       }
       toast.error(error.response?.data?.error || 'Failed to create issue');
