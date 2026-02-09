@@ -74,11 +74,12 @@ export const issueService = {
 
    // eslint-disable-next-line @typescript-eslint/no-explicit-any
    create: async (issueData: any) => {
-      // 1. Generate Complaint Number locally or trigger? 
-      // Ideally user DB trigger, but for now let's hope DB trigger exists or we generate simple one
-      // We will let the DB trigger handle complaint_number if it exists, otherwise it might be null initially
-      // Or we rely on the backend logic we had. Since we are moving logic to frontend, we might miss the trigger if it was in Express.
-      // However, the DB schema conversation showed a trigger "set_complaint_number", so we are good.
+      // Get current authenticated user
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (!user) {
+         throw new Error("User not authenticated");
+      }
 
       const { data, error } = await supabase
          .from('complaints')
@@ -90,7 +91,7 @@ export const issueService = {
                latitude: issueData.latitude,
                longitude: issueData.longitude,
                address: issueData.address,
-               user_id: issueData.user_id,
+               user_id: user.id, // 🔥 VERY IMPORTANT: Use fresh user ID
                status: 'pending'
             }
          ])

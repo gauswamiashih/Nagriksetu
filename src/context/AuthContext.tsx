@@ -13,23 +13,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Check active session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        mapSupabaseUserToUser(session.user).then(setUser);
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      try {
+        if (session?.user) {
+          const user = await mapSupabaseUserToUser(session.user);
+          setUser(user);
+        }
+      } catch (error) {
+        console.error('Error restoring session:', error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      if (session?.user) {
-        const mappedUser = await mapSupabaseUserToUser(session.user);
-        setUser(mappedUser);
-      } else {
-        setUser(null);
+      try {
+        if (session?.user) {
+          const mappedUser = await mapSupabaseUserToUser(session.user);
+          setUser(mappedUser);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        console.error('Error on auth change:', error);
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -129,24 +140,50 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 // Helper to map Supabase auth user to our app User type
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function mapSupabaseUserToUser(authUser: any): Promise<User> {
-  // Fetch additional profile data from 'users' table if needed, 
-  // or trust metadata. For now, we trust metadata for speed.
-  const profile = await supabase
-    .from('users')
-    .select('*')
-    .eq('id', authUser.id)
-    .single();
+  try {
+    // Fetch additional profile data from 'users' table if needed, 
+    // or trust metadata. For now, we trust metadata for speed.
+    // Wrap in a timeout to prevent hanging if DB is unreachable
+    const profilePromise = supabase
+      .from('users')
+      .select('*')
+      .eq('id', authUser.id)
+      .single();
 
-  const name = profile.data?.full_name || authUser.user_metadata?.full_name || 'User';
-  const role = profile.data?.role || authUser.user_metadata?.role || 'citizen';
+    // Race with a timeout
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Profile fetch timeout')), 5000)
+    );
 
-  return {
-    id: authUser.id,
-    email: authUser.email,
-    name: name,
-    role: role as 'citizen' | 'admin',
-    createdAt: new Date(authUser.created_at),
-  };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let profile: any = { data: null };
+    try {
+      profile = await Promise.race([profilePromise, timeoutPromise]);
+    } catch (e) {
+      console.warn('Profile fetch timed out or failed, using metadata:', e);
+    }
+
+    const name = profile.data?.full_name || authUser.user_metadata?.full_name || 'User';
+    const role = profile.data?.role || authUser.user_metadata?.role || 'citizen';
+
+    return {
+      id: authUser.id,
+      email: authUser.email,
+      name: name,
+      role: role as 'citizen' | 'admin',
+      createdAt: new Date(authUser.created_at),
+    };
+  } catch (error) {
+    console.error('Error mapping user:', error);
+    // Fallback to basic auth user data
+    return {
+      id: authUser.id,
+      email: authUser.email,
+      name: authUser.user_metadata?.full_name || 'User',
+      role: (authUser.user_metadata?.role || 'citizen') as 'citizen' | 'admin',
+      createdAt: new Date(authUser.created_at),
+    };
+  }
 }
 
 export function useAuth() {
