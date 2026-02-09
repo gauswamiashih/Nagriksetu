@@ -21,4 +21,5 @@ export default defineConfig(({ mode }) => ({
   build: {
     chunkSizeWarningLimit: 1600,
   },
+  base: "/nagriksetu/",
 }));
