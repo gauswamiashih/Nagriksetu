@@ -37,9 +37,7 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-secondary">
-              <Shield className="h-6 w-6 text-primary" />
-            </div>
+
             <div className="flex flex-col">
               <span className="font-display text-lg font-bold text-secondary">NagrikSetu</span>
               <span className="text-[10px] text-muted-foreground leading-none">Banaskantha District</span>
@@ -52,9 +50,8 @@ export function Navbar() {
               <Link
                 key={link.href}
                 to={link.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isActive(link.href) ? 'text-primary' : 'text-foreground/70'
-                }`}
+                className={`text-sm font-medium transition-colors hover:text-primary ${isActive(link.href) ? 'text-primary' : 'text-foreground/70'
+                  }`}
               >
                 {link.label}
               </Link>
@@ -127,11 +124,10 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   to={link.href}
-                  className={`px-4 py-2 rounded-lg transition-colors ${
-                    isActive(link.href)
+                  className={`px-4 py-2 rounded-lg transition-colors ${isActive(link.href)
                       ? 'bg-primary/10 text-primary'
                       : 'hover:bg-muted'
-                  }`}
+                    }`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
