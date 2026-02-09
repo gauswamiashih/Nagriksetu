@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { User } from '@/types';
+import { supabase } from '@/lib/supabase';
 
 export function useUsers() {
    const [users, setUsers] = useState<User[]>([]);
@@ -8,20 +9,20 @@ export function useUsers() {
    useEffect(() => {
       const fetchUsers = async () => {
          try {
-            // Simulate API delay
-            await new Promise(resolve => setTimeout(resolve, 500));
+            const { data, error } = await supabase.from('users').select('*');
+            if (error) throw error;
 
-            const storedUsers = localStorage.getItem('nagriksetu_users');
-            if (storedUsers) {
-               const parsedUsers = JSON.parse(storedUsers);
-               // Convert date strings back to Date objects
-               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-               const formattedUsers = parsedUsers.map((u: any) => ({
-                  ...u,
-                  createdAt: new Date(u.createdAt)
-               }));
-               setUsers(formattedUsers);
-            }
+            // Map Supabase user to App user if needed, or cast
+            // The DB 'users' table structure matches our needs mostly
+            const mappedUsers: User[] = data.map(u => ({
+               id: u.id,
+               email: u.email,
+               name: u.full_name,
+               role: u.role as 'citizen' | 'admin',
+               createdAt: new Date(u.created_at)
+            }));
+
+            setUsers(mappedUsers);
          } catch (error) {
             console.error('Failed to fetch users:', error);
          } finally {

@@ -52,14 +52,9 @@ export function IssueProvider({ children }: { children: ReactNode }) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Create issue error:', error);
-      if (error.response) {
-        console.error('Server Error Response:', error.response.data);
-        if (error.response.data.error?.includes('foreign key constraint')) {
-          toast.error('Session expired. Please log out and log in again.');
-          throw error;
-        }
-      }
-      toast.error(error.response?.data?.error || 'Failed to create issue');
+      // Supabase errors usually have a 'message' or 'details' property
+      const msg = error.message || error.details || 'Failed to create issue';
+      toast.error(msg);
       throw error;
     } finally {
       setIsLoading(false);
