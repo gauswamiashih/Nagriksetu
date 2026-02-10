@@ -30,6 +30,7 @@ export function IssueCard({ issue, showActions = true, onViewDetails }: IssueCar
           <img
             src={issue.imageUrl}
             alt={issue.title}
+            loading="lazy"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
           <div className="absolute top-2 right-2 flex gap-2">
@@ -60,7 +61,7 @@ export function IssueCard({ issue, showActions = true, onViewDetails }: IssueCar
           </div>
           <div className="flex items-center gap-1.5">
             <Calendar className="h-3.5 w-3.5" />
-            <span>{formatDistanceToNow(issue.createdAt, { addSuffix: true })}</span>
+            <span>{formatDistanceToNow(new Date(issue.createdAt), { addSuffix: true })}</span>
           </div>
         </div>
       </CardContent>

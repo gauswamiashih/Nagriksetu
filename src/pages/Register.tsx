@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useAuth } from '@/context/AuthContext';
 import { Shield, Mail, Lock, User, Loader2, Eye, EyeOff, Phone } from 'lucide-react';
 import { z } from 'zod';
+import { Logo } from '@/components/ui/Logo';
 
 const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(50, 'Name is too long'),
@@ -23,7 +24,7 @@ const registerSchema = z.object({
 export default function Register() {
   const { register, isLoading } = useAuth();
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -45,7 +46,7 @@ export default function Register() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!acceptedTerms) {
       setErrors({ terms: 'Please accept the terms and conditions' });
       return;
@@ -54,9 +55,9 @@ export default function Register() {
     try {
       const validatedData = registerSchema.parse(formData);
       setErrors({});
-      
+
       await register(validatedData.email, validatedData.password, validatedData.name);
-      
+
       if (validatedData.email === 'gauswamiashish760@gmail.com') {
         navigate('/admin');
       } else {
@@ -77,17 +78,24 @@ export default function Register() {
 
   return (
     <Layout showFooter={false}>
-      <div className="min-h-[calc(100vh-64px)] flex items-center justify-center p-4 bg-muted/30">
-        <div className="w-full max-w-md">
+      <div className="min-h-[calc(100vh-64px)] flex items-center justify-center p-4 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] -z-10" />
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl opacity-50 animate-pulse" />
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl opacity-50 animate-pulse delay-1000" />
+
+        <div className="w-full max-w-md relative z-10">
+
+
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-secondary mb-4">
-              <Shield className="h-8 w-8 text-primary" />
+            <div className="flex justify-center mb-4">
+              <Logo showText={false} iconClassName="w-20 h-20" />
             </div>
-            <h1 className="text-2xl font-display font-bold">Create Account</h1>
-            <p className="text-muted-foreground">Join NagrikSetu - Banaskantha</p>
+            <h1 className="text-3xl font-display font-bold tracking-tight">Create Account</h1>
+            <p className="text-muted-foreground mt-2">Join NagrikSetu - Banaskantha</p>
           </div>
 
-          <Card className="shadow-lg">
+          <Card className="shadow-xl bg-card/80 backdrop-blur-sm border-white/20">
             <form onSubmit={handleSubmit}>
               <CardHeader>
                 <CardTitle>Register</CardTitle>

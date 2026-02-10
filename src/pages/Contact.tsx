@@ -17,6 +17,7 @@ import {
   Loader2
 } from 'lucide-react';
 import { z } from 'zod';
+import { Reveal } from '@/components/ui/Reveal';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name is required').max(50),
@@ -76,253 +77,229 @@ export default function Contact() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="hero-gradient py-16 md:py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-hero-pattern opacity-50" />
+      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-background">
+        <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02] -z-10" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl opacity-30 animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl opacity-30 animate-pulse delay-1000" />
+
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl mx-auto text-center text-secondary-foreground">
-            <h1 className="text-4xl md:text-5xl font-display font-bold mb-6">
-              Contact <span className="text-primary">Us</span>
-            </h1>
-            <p className="text-xl text-secondary-foreground/80">
-              Get in touch with the NagrikSetu team for any queries or support
-            </p>
+          <div className="max-w-4xl mx-auto text-center">
+            <Reveal>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20 backdrop-blur-sm shadow-sm mb-6">
+                <Mail className="h-4 w-4" />
+                <span className="text-sm font-medium">Get in Touch</span>
+              </div>
+              <h1 className="text-5xl md:text-7xl font-display font-extrabold mb-6 tracking-tight">
+                Contact <span className="text-gradient">Us</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-muted-foreground/80 leading-relaxed max-w-2xl mx-auto">
+                Have questions or suggestions? We're here to help you build a better Banaskantha.
+              </p>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="py-16 md:py-24">
+      <section className="py-20 md:py-32">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-3 gap-12 max-w-7xl mx-auto">
             {/* Contact Info */}
-            <div className="lg:col-span-1 space-y-6">
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <Building2 className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-1">Office Address</h3>
-                      <p className="text-sm text-muted-foreground">
-                        District Collector Office<br />
-                        Palanpur, Banaskantha<br />
-                        Gujarat - 385001
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="lg:col-span-1 space-y-8">
+              <Reveal delay={100}>
+                <div>
+                  <h2 className="text-3xl font-display font-bold mb-6">Contact Information</h2>
+                  <p className="text-muted-foreground mb-8">
+                    Reach out to us through any of these channels. We value your feedback and engagement.
+                  </p>
+                </div>
+              </Reveal>
 
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <Phone className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-1">Phone</h3>
-                      <p className="text-sm text-muted-foreground">
-                        +91 96645 92743<br />
-                        +91 2742 252526
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <Mail className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-1">Email</h3>
-                      <p className="text-sm text-muted-foreground">
-                        gauswamiashish760@gmail.com<br />
-                        support@nagriksetu.gov.in
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <Clock className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-1">Working Hours</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Monday - Saturday<br />
-                        10:00 AM - 6:00 PM<br />
-                        <span className="text-xs">(Closed on Sundays & Public Holidays)</span>
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <Globe className="h-6 w-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold mb-1">Official Website</h3>
-                      <a
-                        href="https://banaskantha.gujarat.gov.in"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-primary hover:underline"
-                      >
-                        banaskantha.gujarat.gov.in
-                      </a>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              {[
+                { icon: Building2, title: 'Office Address', content: <><span className="font-semibold block text-foreground">District Collector Office</span> Palanpur, Banaskantha<br />Gujarat - 385001</>, color: 'text-primary', bg: 'bg-primary/10' },
+                { icon: Phone, title: 'Phone', content: <><a href="tel:+919664592743" className="hover:text-primary transition-colors">+91 96645 92743</a><br /><a href="tel:+912742252526" className="hover:text-primary transition-colors">+91 2742 252526</a></>, color: 'text-green-600', bg: 'bg-green-100' },
+                { icon: Mail, title: 'Email', content: <><a href="mailto:gauswamiashish760@gmail.com" className="hover:text-primary transition-colors">gauswamiashish760@gmail.com</a><br /><a href="mailto:support@nagriksetu.gov.in" className="hover:text-primary transition-colors">support@nagriksetu.gov.in</a></>, color: 'text-orange-600', bg: 'bg-orange-100' },
+                { icon: Clock, title: 'Working Hours', content: <>Monday - Saturday<br />10:00 AM - 6:00 PM<br /><span className="text-xs text-muted-foreground">(Closed on Sundays & Public Holidays)</span></>, color: 'text-purple-600', bg: 'bg-purple-100' },
+                { icon: Globe, title: 'Official Website', content: <a href="https://banaskantha.gujarat.gov.in" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">banaskantha.gujarat.gov.in</a>, color: 'text-blue-600', bg: 'bg-blue-100' },
+              ].map((item, index) => (
+                <Reveal key={item.title} delay={index * 100 + 200}>
+                  <Card className="border-none shadow-sm hover:shadow-md transition-shadow">
+                    <CardContent className="p-4 flex items-start gap-4">
+                      <div className={`w-12 h-12 rounded-xl ${item.bg} flex items-center justify-center shrink-0`}>
+                        <item.icon className={`h-6 w-6 ${item.color}`} />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-lg mb-1">{item.title}</h3>
+                        <div className="text-sm text-muted-foreground leading-relaxed">
+                          {item.content}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Reveal>
+              ))}
             </div>
 
             {/* Contact Form */}
             <div className="lg:col-span-2">
-              <Card className="shadow-lg">
-                <CardHeader>
-                  <CardTitle>Send us a Message</CardTitle>
-                  <CardDescription>
-                    Fill out the form below and we'll get back to you as soon as possible
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Full Name *</Label>
-                        <Input
-                          id="name"
-                          name="name"
-                          placeholder="Your name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          disabled={isLoading}
-                        />
-                        {errors.name && (
-                          <p className="text-sm text-destructive">{errors.name}</p>
-                        )}
+              <Reveal delay={300} className="h-full">
+                <Card className="h-full border-none shadow-2xl bg-white/50 dark:bg-card/50 backdrop-blur-md relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-primary/10 to-transparent rounded-bl-full -z-10" />
+                  <CardHeader className="md:p-10 pb-0">
+                    <CardTitle className="text-3xl font-display">Send us a Message</CardTitle>
+                    <CardDescription className="text-lg">
+                      Fill out the form below and we'll get back to you as soon as possible
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="md:p-10 pt-8">
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div className="grid sm:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <Label htmlFor="name" className="text-base">Full Name <span className="text-red-500">*</span></Label>
+                          <Input
+                            id="name"
+                            name="name"
+                            placeholder="Your name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            disabled={isLoading}
+                            className="h-12 bg-white/50 dark:bg-background/50 backdrop-blur-sm border-muted-foreground/20 focus:border-primary/50 transition-colors"
+                          />
+                          {errors.name && (
+                            <p className="text-sm text-destructive">{errors.name}</p>
+                          )}
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="email" className="text-base">Email Address <span className="text-red-500">*</span></Label>
+                          <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="you@example.com"
+                            value={formData.email}
+                            onChange={handleChange}
+                            disabled={isLoading}
+                            className="h-12 bg-white/50 dark:bg-background/50 backdrop-blur-sm border-muted-foreground/20 focus:border-primary/50 transition-colors"
+                          />
+                          {errors.email && (
+                            <p className="text-sm text-destructive">{errors.email}</p>
+                          )}
+                        </div>
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email Address *</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          placeholder="you@example.com"
-                          value={formData.email}
-                          onChange={handleChange}
-                          disabled={isLoading}
-                        />
-                        {errors.email && (
-                          <p className="text-sm text-destructive">{errors.email}</p>
-                        )}
-                      </div>
-                    </div>
 
-                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="grid sm:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <Label htmlFor="phone" className="text-base">Phone Number</Label>
+                          <Input
+                            id="phone"
+                            name="phone"
+                            type="tel"
+                            placeholder="9876543210"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            disabled={isLoading}
+                            className="h-12 bg-white/50 dark:bg-background/50 backdrop-blur-sm border-muted-foreground/20 focus:border-primary/50 transition-colors"
+                          />
+                          {errors.phone && (
+                            <p className="text-sm text-destructive">{errors.phone}</p>
+                          )}
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="subject" className="text-base">Subject <span className="text-red-500">*</span></Label>
+                          <Input
+                            id="subject"
+                            name="subject"
+                            placeholder="What is this about?"
+                            value={formData.subject}
+                            onChange={handleChange}
+                            disabled={isLoading}
+                            className="h-12 bg-white/50 dark:bg-background/50 backdrop-blur-sm border-muted-foreground/20 focus:border-primary/50 transition-colors"
+                          />
+                          {errors.subject && (
+                            <p className="text-sm text-destructive">{errors.subject}</p>
+                          )}
+                        </div>
+                      </div>
+
                       <div className="space-y-2">
-                        <Label htmlFor="phone">Phone Number</Label>
-                        <Input
-                          id="phone"
-                          name="phone"
-                          type="tel"
-                          placeholder="9876543210"
-                          value={formData.phone}
+                        <Label htmlFor="message" className="text-base">Message <span className="text-red-500">*</span></Label>
+                        <Textarea
+                          id="message"
+                          name="message"
+                          placeholder="Write your message here..."
+                          value={formData.message}
                           onChange={handleChange}
                           disabled={isLoading}
+                          rows={6}
+                          className="bg-white/50 dark:bg-background/50 backdrop-blur-sm border-muted-foreground/20 focus:border-primary/50 transition-colors resize-none"
                         />
-                        {errors.phone && (
-                          <p className="text-sm text-destructive">{errors.phone}</p>
+                        <p className="text-xs text-muted-foreground text-right">
+                          {formData.message.length}/1000 characters
+                        </p>
+                        {errors.message && (
+                          <p className="text-sm text-destructive">{errors.message}</p>
                         )}
                       </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="subject">Subject *</Label>
-                        <Input
-                          id="subject"
-                          name="subject"
-                          placeholder="What is this about?"
-                          value={formData.subject}
-                          onChange={handleChange}
-                          disabled={isLoading}
-                        />
-                        {errors.subject && (
-                          <p className="text-sm text-destructive">{errors.subject}</p>
+
+                      <Button type="submit" size="lg" className="w-full h-12 text-lg font-semibold shadow-lg hover:shadow-primary/25 transition-all duration-300" disabled={isLoading}>
+                        {isLoading ? (
+                          <>
+                            <Loader2 className="h-5 w-5 mr-3 animate-spin" />
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            <Send className="h-5 w-5 mr-3" />
+                            Send Message
+                          </>
                         )}
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="message">Message *</Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        placeholder="Write your message here..."
-                        value={formData.message}
-                        onChange={handleChange}
-                        disabled={isLoading}
-                        rows={6}
-                      />
-                      <p className="text-xs text-muted-foreground text-right">
-                        {formData.message.length}/1000 characters
-                      </p>
-                      {errors.message && (
-                        <p className="text-sm text-destructive">{errors.message}</p>
-                      )}
-                    </div>
-
-                    <Button type="submit" size="lg" className="w-full" disabled={isLoading}>
-                      {isLoading ? (
-                        <>
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="h-4 w-4 mr-2" />
-                          Send Message
-                        </>
-                      )}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
+                      </Button>
+                    </form>
+                  </CardContent>
+                </Card>
+              </Reveal>
             </div>
           </div>
         </div>
       </section>
 
       {/* Map Section */}
-      <section className="py-16 bg-muted/30">
+      <section className="py-20 bg-muted/40 relative">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-display font-bold mb-2">Find Us</h2>
-              <p className="text-muted-foreground">Visit our office at District Collector Office, Palanpur</p>
-            </div>
-            <Card className="overflow-hidden">
-              <div className="h-80 bg-muted flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <p className="text-muted-foreground">
-                    District Collector Office<br />
-                    Palanpur, Banaskantha - 385001<br />
-                    Gujarat, India
-                  </p>
-                </div>
+          <div className="max-w-5xl mx-auto">
+            <Reveal>
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Find <span className="text-primary">Us</span></h2>
+                <p className="text-xl text-muted-foreground">Visit our office for in-person assistance</p>
               </div>
-            </Card>
+            </Reveal>
+            <Reveal threshold={0.2} delay={200}>
+              <Card className="overflow-hidden border-none shadow-2xl rounded-3xl">
+                <div className="h-96 bg-muted relative group">
+                  <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
+                    <div className="text-center p-8 bg-background/80 backdrop-blur-md rounded-2xl shadow-xl transform transition-transform duration-500 group-hover:scale-105">
+                      <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 animate-bounce">
+                        <MapPin className="h-8 w-8 text-primary" />
+                      </div>
+                      <h3 className="text-2xl font-bold mb-2">District Collector Office</h3>
+                      <p className="text-muted-foreground mb-1">
+                        Palanpur, Banaskantha - 385001
+                      </p>
+                      <p className="text-muted-foreground">
+                        Gujarat, India
+                      </p>
+                      <Button variant="outline" className="mt-6 hover:bg-primary hover:text-white transition-colors">
+                        Get Directions
+                      </Button>
+                    </div>
+                  </div>
+                  {/* Placeholder for actual map integration */}
+                  <div className="w-full h-full bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-20" />
+                </div>
+              </Card>
+            </Reveal>
           </div>
         </div>
       </section>

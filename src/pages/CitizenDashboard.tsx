@@ -6,17 +6,18 @@ import { useAuth } from '@/context/AuthContext';
 import { useIssues } from '@/context/IssueContext';
 import { IssueCard } from '@/components/ui/IssueCard';
 import { StatCard } from '@/components/ui/StatCard';
-import { 
-  FileText, 
-  Plus, 
-  Clock, 
-  CheckCircle2, 
+import {
+  FileText,
+  Plus,
+  Clock,
+  CheckCircle2,
   AlertCircle,
   TrendingUp,
   Calendar,
   User
 } from 'lucide-react';
 import { format } from 'date-fns';
+import { CitizenIssuesTable } from '@/components/citizen/CitizenIssuesTable';
 
 export default function CitizenDashboard() {
   const { user, isAdmin } = useAuth();
@@ -161,42 +162,13 @@ export default function CitizenDashboard() {
                 <Calendar className="h-5 w-5 text-primary" />
                 Your Recent Reports
               </CardTitle>
-              {userIssues.length > 3 && (
-                <Button variant="ghost" size="sm" asChild>
-                  <Link to="/my-issues">View All</Link>
-                </Button>
-              )}
             </CardHeader>
             <CardContent>
-              {isLoading ? (
-                <div className="text-center py-8 text-muted-foreground">
-                  Loading your issues...
-                </div>
-              ) : userIssues.length === 0 ? (
-                <div className="text-center py-12">
-                  <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-medium mb-2">No Reports Yet</h3>
-                  <p className="text-muted-foreground mb-4">
-                    You haven't reported any civic issues yet. Start by reporting an issue in your area.
-                  </p>
-                  <Button asChild>
-                    <Link to="/report">
-                      <Plus className="h-4 w-4 mr-2" />
-                      Report Your First Issue
-                    </Link>
-                  </Button>
-                </div>
-              ) : (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {userIssues.slice(0, 6).map((issue) => (
-                    <IssueCard key={issue.id} issue={issue} />
-                  ))}
-                </div>
-              )}
+              <CitizenIssuesTable issues={userIssues} isLoading={isLoading} />
             </CardContent>
           </Card>
         </div>
       </div>
-    </Layout>
+    </Layout >
   );
 }

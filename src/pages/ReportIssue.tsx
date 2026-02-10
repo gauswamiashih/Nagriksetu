@@ -187,13 +187,17 @@ export default function ReportIssue() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             {/* Header */}
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-4">
-                <FileText className="h-8 w-8 text-primary" />
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6 ring-1 ring-primary/20">
+                <FileText className="h-10 w-10 text-primary" />
               </div>
-              <h1 className="text-2xl md:text-3xl font-display font-bold mb-2">Report an Issue</h1>
-              <p className="text-muted-foreground">
-                Help us improve Banaskantha by reporting civic issues in your area
+              <h1 className="text-3xl md:text-5xl font-display font-bold mb-3 tracking-tight">
+                Report an <span className="text-gradient">Issue</span>
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                Help us improve Banaskantha by reporting civic issues in your area.
+                <br className="hidden md:block" />
+                Your report drives real change.
               </p>
             </div>
 

@@ -82,6 +82,10 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      boxShadow: {
+        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+        'glow': '0 0 20px -5px hsl(var(--primary) / 0.3)',
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -117,9 +121,9 @@ export default {
         "float": "float 3s ease-in-out infinite",
       },
       backgroundImage: {
-        'hero-pattern': 'radial-gradient(circle at 20% 50%, hsl(var(--saffron) / 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 50%, hsl(var(--indian-green) / 0.1) 0%, transparent 50%)',
+        'hero-pattern': 'radial-gradient(circle at 20% 50%, hsl(var(--saffron) / 0.08) 0%, transparent 50%), radial-gradient(circle at 80% 50%, hsl(var(--indian-green) / 0.08) 0%, transparent 50%)',
       },
     },
   },
-  plugins: [animate],
+  plugins: [animate, require("tailwindcss-animate")],
 } satisfies Config;

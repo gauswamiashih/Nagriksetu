@@ -4,15 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
-/* NagrikSetu Design System - Indian Civic Platform */
+/* NagrikSetu Design System - Premium Civic Platform */
 
 @layer base {
   :root {
-    /* Core backgrounds - Premium Slate Tones */
-    --background: 210 20% 98%;
+    /* Core backgrounds - Clean & Airy */
+    --background: 210 20% 99%;
     --foreground: 222 47% 11%;
 
-    /* Card surfaces */
+    /* Card surfaces - Pure White with Soft Depth */
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
 
@@ -20,19 +20,19 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    /* Primary - Burnt Saffron (Rich & Authoritative) */
-    --primary: 30 85% 55%;
+    /* Primary - Burnt Saffron (Refined) */
+    --primary: 30 90% 55%;
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary - Midnight Navy (Deep & Professional) */
-    --secondary: 222 70% 15%;
+    /* Secondary - Midnight Navy (Deep) */
+    --secondary: 222 70% 12%;
     --secondary-foreground: 0 0% 100%;
 
     /* Muted surfaces */
     --muted: 210 20% 96%;
     --muted-foreground: 215 16% 47%;
 
-    /* Accent - Emerald (Growth & Prosperity) */
+    /* Accent - Emerald (Vibrant) */
     --accent: 148 70% 35%;
     --accent-foreground: 0 0% 100%;
 
@@ -41,27 +41,27 @@
     --destructive-foreground: 0 0% 100%;
 
     /* Borders & inputs */
-    --border: 220 13% 87%;
-    --input: 220 13% 91%;
-    --ring: 30 85% 55%;
+    --border: 220 13% 90%;
+    --input: 220 13% 92%;
+    --ring: 30 90% 55%;
 
-    /* Radius */
-    --radius: 0.75rem;
+    /* Radius - Modern & Soft */
+    --radius: 1rem;
 
     /* Sidebar */
-    --sidebar-background: 222 70% 12%;
+    --sidebar-background: 222 70% 10%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 30 85% 55%;
+    --sidebar-primary: 30 90% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 222 60% 20%;
+    --sidebar-accent: 222 60% 18%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 222 60% 20%;
-    --sidebar-ring: 30 85% 55%;
+    --sidebar-border: 222 60% 15%;
+    --sidebar-ring: 30 90% 55%;
 
-    /* Custom NagrikSetu colors - Updated to Premium */
-    --saffron: 30 85% 55%;
-    --saffron-light: 30 80% 65%;
-    --saffron-dark: 30 90% 45%;
+    /* Custom Color Variables */
+    --saffron: 30 90% 55%;
+    --saffron-light: 30 85% 65%;
+    --saffron-dark: 30 95% 45%;
 
     --navy: 222 70% 15%;
     --navy-light: 222 60% 25%;
@@ -80,29 +80,28 @@
     --severity-medium: 40 95% 50%;
     --severity-low: 148 70% 40%;
 
-    /* Gradients - Refined & Smoother */
-    --gradient-hero: linear-gradient(135deg, hsl(222 70% 15%) 0%, hsl(222 80% 10%) 100%);
-    --gradient-saffron: linear-gradient(135deg, hsl(30 85% 55%) 0%, hsl(30 95% 45%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 20% 98%) 100%);
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(222 70% 12%) 0%, hsl(222 80% 8%) 100%);
+    --gradient-saffron: linear-gradient(135deg, hsl(30 90% 55%) 0%, hsl(30 95% 45%) 100%);
   }
 
   .dark {
     --background: 222 47% 7%;
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 11%;
+    --card: 222 47% 10%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 11%;
+    --popover: 222 47% 10%;
     --popover-foreground: 210 40% 98%;
 
     --primary: 30 85% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 222 50% 35%;
+    --secondary: 222 40% 20%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 217 33% 17%;
+    --muted: 217 33% 15%;
     --muted-foreground: 215 20% 65%;
 
     --accent: 148 60% 40%;
@@ -111,17 +110,17 @@
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
+    --border: 217 33% 15%;
+    --input: 217 33% 15%;
     --ring: 30 85% 55%;
 
-    --sidebar-background: 222 47% 7%;
+    --sidebar-background: 222 47% 5%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 30 85% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent: 217 33% 15%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 33% 17%;
+    --sidebar-border: 217 33% 15%;
     --sidebar-ring: 30 85% 55%;
   }
 }
@@ -132,8 +131,8 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased leading-relaxed;
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    @apply bg-background text-foreground font-sans antialiased leading-relaxed overflow-x-hidden;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 
   /* Enhanced Typography */
@@ -144,52 +143,39 @@
   h5,
   h6 {
     font-family: 'Outfit', system-ui, sans-serif;
-    @apply font-bold tracking-tight text-foreground/90;
-  }
-
-  h1 {
-    @apply tracking-tighter;
+    @apply font-bold tracking-tight text-foreground/95;
   }
 }
 
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-[#e67e22] to-accent;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-orange-500 to-amber-500;
   }
 
   .hero-gradient {
     background: var(--gradient-hero);
   }
 
-  .saffron-gradient {
-    background: var(--gradient-saffron);
-  }
-
   .glass-card {
-    @apply bg-card/80 backdrop-blur-xl border border-border/50 shadow-xl;
+    @apply bg-card/70 backdrop-blur-xl border border-white/20 shadow-soft dark:border-white/5 dark:bg-card/40;
   }
 
-  .status-pending {
-    @apply bg-[hsl(var(--status-pending))] text-white;
+  .glass-effect {
+    @apply backdrop-blur-md bg-background/80 supports-[backdrop-filter]:bg-background/60;
   }
 
-  .status-in-progress {
-    @apply bg-[hsl(var(--status-in-progress))] text-white;
+  /* Status Badges */
+  .status-badge {
+    @apply px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wide;
   }
 
-  .status-resolved {
-    @apply bg-[hsl(var(--status-resolved))] text-white;
+  /* Scrollbar Hide */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
-  .severity-high {
-    @apply bg-[hsl(var(--severity-high))] text-white;
-  }
-
-  .severity-medium {
-    @apply bg-[hsl(var(--severity-medium))] text-white;
-  }
-
-  .severity-low {
-    @apply bg-[hsl(var(--severity-low))] text-white;
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

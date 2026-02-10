@@ -19,6 +19,7 @@ import {
   HeartHandshake,
 } from 'lucide-react';
 import { Reveal } from '@/components/ui/Reveal';
+import { Logo } from '@/components/ui/Logo';
 
 const features = [
   {
@@ -78,47 +79,67 @@ export default function Home() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative hero-gradient overflow-hidden">
-        <div className="absolute inset-0 bg-hero-pattern opacity-50" />
-        <div className="container mx-auto px-4 py-20 md:py-28 relative z-10">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-primary/20 text-primary-foreground rounded-full px-4 py-1.5 text-sm mb-6 animate-fade-in">
-              <Shield className="h-4 w-4" />
-              <span>Government of Gujarat Initiative</span>
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background">
+        {/* Background Elements */}
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-grid-black/[0.04] dark:bg-grid-white/[0.04] -z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background -z-10" />
+        <div className="absolute -top-24 -right-24 w-[30rem] h-[30rem] bg-blue-500/30 rounded-full blur-[100px] opacity-60 animate-pulse" />
+        <div className="absolute -bottom-24 -left-24 w-[30rem] h-[30rem] bg-green-500/30 rounded-full blur-[100px] opacity-60 animate-pulse delay-1000" />
+
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <div className="max-w-4xl mx-auto space-y-8">
+            {/* Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 text-blue-600 border border-blue-500/20 backdrop-blur-sm shadow-sm animate-fade-in hover:bg-blue-500/20 transition-colors cursor-default">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+              </span>
+              <span className="font-semibold text-sm tracking-wide">Government of Gujarat Initiative</span>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-secondary-foreground mb-6 leading-tight animate-fade-in [animation-delay:200ms] opacity-0 fill-mode-forwards">
-              NagrikSetu
-              <span className="block text-primary">Banaskantha</span>
+
+            {/* Headline with Logo */}
+            {/* Headline */}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-extrabold tracking-tight leading-[1.1] animate-fade-in [animation-delay:200ms] opacity-0 fill-mode-forwards select-none text-center">
+              <span className="text-gradient bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-blue-600 to-green-600 dark:from-blue-400 dark:to-green-400">
+                NagrikSetu
+              </span>
+              <span className="block text-3xl md:text-5xl lg:text-6xl text-muted-foreground font-bold mt-2 tracking-normal">
+                Banaskantha District
+              </span>
             </h1>
-            <p className="text-lg md:text-xl text-secondary-foreground/80 mb-8 max-w-2xl animate-fade-in [animation-delay:400ms] opacity-0 fill-mode-forwards">
-              Your voice matters. Report civic issues directly to the district administration
-              and track their resolution in real-time. Together, let's build a better Banaskantha.
+
+            {/* Description */}
+            <p className="text-lg md:text-xl text-muted-foreground/90 max-w-2xl mx-auto leading-relaxed animate-fade-in [animation-delay:400ms] opacity-0 fill-mode-forwards">
+              Empowering citizens with a seamless platform to report issues, track resolutions, and build a better community together.
             </p>
-            <div className="flex flex-wrap gap-4 animate-fade-in [animation-delay:600ms] opacity-0 fill-mode-forwards">
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in [animation-delay:600ms] opacity-0 fill-mode-forwards pt-4">
               {user ? (
                 <>
-                  <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg">
+                  <Button size="lg" className="h-12 px-8 text-lg rounded-full shadow-lg hover:shadow-primary/25 transition-all hover:scale-105 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 border-none" asChild>
                     <Link to="/report">
                       <FileText className="h-5 w-5 mr-2" />
-                      Report an Issue
+                      Report Issue
                     </Link>
                   </Button>
-                  <Button size="lg" variant="outline" asChild className="bg-secondary-foreground/10 border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/20">
+                  <Button size="lg" variant="outline" className="h-12 px-8 text-lg rounded-full border-2 hover:bg-secondary/5 transition-all hover:scale-105" asChild>
                     <Link to="/dashboard">
-                      View My Dashboard
+                      Dashboard
                       <ArrowRight className="h-5 w-5 ml-2" />
                     </Link>
                   </Button>
                 </>
               ) : (
                 <>
-                  <Button size="lg" asChild className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg">
+                  <Button size="lg" className="h-12 px-8 text-lg rounded-full shadow-lg hover:shadow-primary/25 transition-all hover:scale-105 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 border-none" asChild>
                     <Link to="/register">
                       Get Started
                       <ArrowRight className="h-5 w-5 ml-2" />
                     </Link>
                   </Button>
-                  <Button size="lg" variant="outline" asChild className="bg-secondary-foreground/10 border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/20">
+                  <Button size="lg" variant="outline" className="h-12 px-8 text-lg rounded-full border-2 hover:bg-secondary/5 transition-all hover:scale-105" asChild>
                     <Link to="/login">
                       Login
                     </Link>
@@ -126,14 +147,22 @@ export default function Home() {
                 </>
               )}
             </div>
-          </div>
-        </div>
 
-        {/* Wave decoration */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-            <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="hsl(var(--background))" />
-          </svg>
+            {/* Stats Preview */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 border-t border-border/50 animate-fade-in [animation-delay:800ms] opacity-0 fill-mode-forwards">
+              {[
+                { label: "Active Citizens", value: "50K+" },
+                { label: "Issues Resolved", value: "12K+" },
+                { label: "Response Time", value: "< 24h" },
+                { label: "Satisfaction", value: "98%" }
+              ].map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <div className="text-2xl md:text-3xl font-bold text-foreground">{stat.value}</div>
+                  <div className="text-sm text-muted-foreground uppercase tracking-wider font-medium">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -169,13 +198,22 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => (
               <Reveal key={feature.title} delay={index * 100}>
-                <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-transparent hover:border-primary/30 bg-card/50 backdrop-blur-sm">
-                  <CardContent className="pt-6">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300 group-hover:scale-110 transform">
-                      <feature.icon className="h-6 w-6 text-primary group-hover:text-primary-foreground" />
+                <Card className="group relative overflow-hidden border-border/50 bg-background/50 hover:bg-background hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-500 hover:-translate-y-2">
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+
+                  <CardContent className="pt-8 pb-8 relative z-10">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-100 to-orange-50 dark:from-orange-900/20 dark:to-orange-800/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-inner">
+                      <feature.icon className="h-7 w-7 text-orange-600 dark:text-orange-400" />
                     </div>
-                    <h3 className="font-display font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{feature.title}</h3>
-                    <p className="text-sm text-muted-foreground">{feature.description}</p>
+
+                    <h3 className="font-display font-bold text-xl mb-3 text-foreground group-hover:text-orange-600 transition-colors duration-300">
+                      {feature.title}
+                    </h3>
+
+                    <p className="text-muted-foreground leading-relaxed">
+                      {feature.description}
+                    </p>
                   </CardContent>
                 </Card>
               </Reveal>
@@ -219,90 +257,114 @@ export default function Home() {
       {/* Recent Issues Section */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-                Recent <span className="text-primary">Reports</span>
-              </h2>
-              <p className="text-muted-foreground max-w-2xl">
-                See what issues are being reported and resolved in your community.
-              </p>
+          <Reveal>
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+                  Recent <span className="text-primary">Reports</span>
+                </h2>
+                <p className="text-muted-foreground max-w-2xl">
+                  See what issues are being reported and resolved in your community.
+                </p>
+              </div>
+              <Button variant="outline" asChild>
+                <Link to="/issues">
+                  View All Issues
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Link>
+              </Button>
             </div>
-            <Button variant="outline" asChild>
-              <Link to="/issues">
-                View All Issues
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Link>
-            </Button>
-          </div>
+          </Reveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentIssues.map((issue) => (
-              <IssueCard key={issue.id} issue={issue} />
+            {recentIssues.map((issue, index) => (
+              <Reveal key={issue.id} delay={index * 100}>
+                <IssueCard issue={issue} />
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 bg-secondary text-secondary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto">
-            <Users className="h-16 w-16 mx-auto mb-6 text-primary" />
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Join the Movement
-            </h2>
-            <p className="text-lg text-secondary-foreground/80 mb-8">
-              Be a part of the digital transformation in Banaskantha. Your participation
-              helps us identify and resolve issues faster, making our district a better place to live.
-            </p>
-            {!user && (
-              <div className="flex flex-wrap justify-center gap-4">
-                <Button size="lg" asChild className="bg-primary hover:bg-primary/90">
-                  <Link to="/register">
-                    <Zap className="h-5 w-5 mr-2" />
-                    Register Now
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10">
-                  <Link to="/about">
-                    Learn More
-                  </Link>
-                </Button>
+      <section className="py-20 md:py-32 relative overflow-hidden">
+        {/* Background Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-white to-blue-50 -z-20" />
+        <div className="absolute inset-0 bg-grid-black/[0.04] -z-10" />
+
+        {/* Animated Orbs */}
+        <div className="absolute top-0 right-0 w-[30rem] h-[30rem] bg-orange-200/40 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-blue-200/40 rounded-full blur-[100px] animate-pulse delay-700" />
+
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <Reveal threshold={0.5}>
+            <div className="max-w-4xl mx-auto space-y-8">
+              {/* Icon Container */}
+              <div className="inline-flex items-center justify-center p-4 rounded-3xl bg-white shadow-xl shadow-orange-500/10 mb-4 group hover:scale-110 transition-transform duration-500 border border-orange-100">
+                <Users className="h-10 w-10 text-orange-600 group-hover:text-orange-500 transition-colors" />
               </div>
-            )}
-          </div>
+
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-foreground tracking-tight leading-tight">
+                Join the <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-600">Movement</span>
+              </h2>
+
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                Be a part of the digital transformation in Banaskantha. Your participation
+                helps us identify and resolve issues faster, making our district a better place to live.
+              </p>
+
+              {!user && (
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                  <Button size="lg" asChild className="h-14 px-8 text-lg rounded-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-lg shadow-orange-500/25 border-none transition-all hover:scale-105 hover:shadow-orange-500/40">
+                    <Link to="/register">
+                      <Zap className="h-5 w-5 mr-2" />
+                      Register Now
+                    </Link>
+                  </Button>
+                  <Button size="lg" variant="outline" asChild className="h-14 px-8 text-lg rounded-full border-2 border-input bg-background hover:bg-muted text-foreground transition-all hover:scale-105">
+                    <Link to="/about">
+                      Learn More
+                    </Link>
+                  </Button>
+                </div>
+              )}
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* How It Works */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              How It <span className="text-primary">Works</span>
-            </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Reporting and tracking issues has never been easier.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-4 gap-8">
+          <Reveal>
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+                How It <span className="text-primary">Works</span>
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+                Reporting and tracking issues has never been easier.
+              </p>
+            </div>
+          </Reveal>
+          <div className="grid md:grid-cols-4 gap-8 relative">
+            <div className="hidden md:block absolute top-[2rem] left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-transparent via-primary/20 to-transparent -z-10" />
             {[
               { step: 1, icon: Users, title: 'Register', desc: 'Create your free account in seconds' },
               { step: 2, icon: FileText, title: 'Report', desc: 'Submit issue with photo & location' },
               { step: 3, icon: Clock, title: 'Track', desc: 'Monitor progress in real-time' },
               { step: 4, icon: CheckCircle2, title: 'Resolved', desc: 'Get notified when issue is fixed' },
             ].map((item, index) => (
-              <div key={item.step} className="relative text-center">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+              <Reveal key={item.step} delay={index * 150} className="relative bg-background p-4 rounded-xl">
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 transform transition-transform duration-300 hover:scale-110 hover:rotate-3 shadow-sm">
                   <item.icon className="h-8 w-8 text-primary" />
                 </div>
-                <div className="absolute top-8 left-[60%] w-[80%] h-0.5 bg-primary/20 hidden md:block" style={{ display: index === 3 ? 'none' : undefined }} />
-                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center mx-auto -mt-2 mb-4 text-sm font-bold relative z-10">
+                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center mx-auto -mt-10 mb-6 text-sm font-bold relative z-10 ring-4 ring-background">
                   {item.step}
                 </div>
-                <h3 className="font-display font-semibold mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
-              </div>
+                <div className="text-center">
+                  <h3 className="font-display font-semibold mb-2 text-xl">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
